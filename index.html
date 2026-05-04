@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Smart Math Minds — Free Grade 6 Math Tools for Alberta Students</title>
+  <meta name="description" content="Two free, ad-free math tools built for Alberta Grade 6 students. A 500-question PAT prep app and Number Mill, a numeracy game — no login, no cost, built by a real Alberta teacher."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --amber:#e8960d;--amber-d:#c47a0e;--amber-l:#fef3d8;--amber-ll:#fffbf0;
+      --teal:#1a9e75;--teal-d:#0d6e52;--teal-l:#e0f5ee;
+      --cream:#fef9f3;--cream2:#fdf4e7;
+      --text:#2c2416;--text-soft:#5c4a2a;--muted:#9b8570;
+      --border:#e8ddd0;--white:#ffffff;
+      --pat-dark:#0b2518;--pat-mid:#143d27;
+      --mill-bg:#fff8f2;
+      --r:14px;--r-sm:8px;--r-lg:20px;
+      --font-d:'Nunito',sans-serif;--font-b:'Inter',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);color:var(--text);background:var(--cream);line-height:1.6;overflow-x:hidden}
+
+    /* ─── NAV ──────────────────────────────────────── */
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(254,249,243,.97);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:0 2rem;
+      display:flex;align-items:center;justify-content:space-between;
+      height:64px;
+    }
+    .nav-logo{
+      font-family:var(--font-d);font-size:1.1rem;font-weight:900;
+      color:var(--amber-d);text-decoration:none;
+      display:flex;align-items:center;gap:9px;letter-spacing:-.01em;
+    }
+    .nav-logo-mark{
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .nav-logo-mark img{
+      width:42px;height:42px;display:block;
+      filter:brightness(0) invert(47%) sepia(80%) saturate(900%) hue-rotate(4deg) brightness(78%) contrast(115%);
+    }
+    .nav-links{display:flex;align-items:center;gap:1.75rem}
+    .nav-links a{font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;transition:color .15s}
+    .nav-links a:hover{color:var(--amber-d)}
+    .nav-cta{
+      background:var(--teal);color:#fff;border:none;border-radius:var(--r-sm);
+      padding:.5rem 1.15rem;font-size:13px;font-weight:800;
+      font-family:var(--font-d);cursor:pointer;text-decoration:none;
+      transition:background .15s;white-space:nowrap;
+    }
+    .nav-cta:hover{background:var(--teal-d)}
+    @media(max-width:600px){.nav-links{display:none}.nav-logo span{display:none}}
+
+    /* ─── HERO ─────────────────────────────────────── */
+    .hero{
+      background:linear-gradient(145deg,#3a1600 0%,#7a3800 35%,#b86a0a 70%,#d4920e 100%);
+      padding:6rem 2rem 0;position:relative;overflow:hidden;
+    }
+    .hero::before{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.06) 0%, transparent 50%),
+        radial-gradient(circle at 15% 80%, rgba(255,255,255,.04) 0%, transparent 40%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      max-width:820px;margin:0 auto;text-align:center;
+      position:relative;z-index:1;
+    }
+    .hero-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.15);color:rgba(255,255,255,.92);
+      font-size:12px;font-weight:700;padding:5px 16px;
+      border-radius:20px;margin-bottom:1.75rem;
+      font-family:var(--font-d);letter-spacing:.06em;text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.2);
+    }
+    h1.hero-h1{
+      font-family:var(--font-d);font-size:3.4rem;font-weight:900;
+      color:#fff;line-height:1.05;margin-bottom:1.25rem;letter-spacing:-.03em;
+    }
+    h1.hero-h1 em{font-style:normal;color:rgba(255,220,100,.9)}
+    .hero-sub{
+      font-size:1.1rem;color:rgba(255,255,255,.82);
+      line-height:1.75;max-width:540px;margin:0 auto 2.5rem;
+    }
+    .hero-btns{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-bottom:3.5rem}
+    .btn-hero-p{
+      background:#fff;color:var(--amber-d);border:none;border-radius:var(--r-sm);
+      padding:.8rem 1.75rem;font-size:14px;font-weight:800;
+      font-family:var(--font-d);cursor:pointer;text-decoration:none;
+      transition:all .15s;box-shadow:0 4px 16px rgba(0,0,0,.2);
+    }
+    .btn-hero-p:hover{background:var(--amber-l);transform:translateY(-2px)}
+    .btn-hero-s{
+      background:rgba(255,255,255,.12);color:#fff;
+      border:2px solid rgba(255,255,255,.4);border-radius:var(--r-sm);
+      padding:.8rem 1.75rem;font-size:14px;font-weight:800;
+      font-family:var(--font-d);cursor:pointer;text-decoration:none;transition:all .15s;
+    }
+    .btn-hero-s:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.75)}
+    /* stats strip */
+    .hero-stats{
+      background:rgba(0,0,0,.22);border-top:1px solid rgba(255,255,255,.12);
+      padding:1.25rem 2rem;position:relative;z-index:1;
+    }
+    .hero-stats-inner{max-width:700px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center}
+    .hstat{
+      padding:.15rem 2.25rem;text-align:center;
+      border-right:1px solid rgba(255,255,255,.18);
+    }
+    .hstat:last-child{border-right:none}
+    .hstat-n{display:block;font-family:var(--font-d);font-size:1.5rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:2px}
+    .hstat-l{font-size:11.5px;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+    @media(max-width:620px){
+      h1.hero-h1{font-size:2.3rem}
+      .hstat{padding:.15rem 1.1rem}
+      .hstat-n{font-size:1.2rem}
+    }
+
+    /* ─── PAT SECTION ──────────────────────────────── */
+    #pat{background:var(--pat-dark);padding:5.5rem 2rem}
+    .pat-inner{
+      max-width:1000px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:4rem;align-items:center;
+    }
+    .pat-eyebrow{
+      font-family:var(--font-d);font-size:11px;font-weight:800;
+      text-transform:uppercase;letter-spacing:.1em;
+      color:var(--teal);margin-bottom:.7rem;
+    }
+    .pat-title{
+      font-family:var(--font-d);font-size:2.1rem;font-weight:900;
+      color:#fff;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.02em;
+    }
+    .pat-pitch{
+      font-size:15px;font-weight:600;color:rgba(255,255,255,.65);
+      margin-bottom:1.25rem;line-height:1.5;
+    }
+    .pat-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:1.75rem}
+    .feat-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:2rem}
+    .feat-list li{
+      display:flex;align-items:baseline;gap:.7rem;
+      font-size:14px;color:rgba(255,255,255,.75);line-height:1.4;
+    }
+    .feat-list li::before{
+      content:'';width:6px;height:6px;border-radius:50%;
+      background:var(--teal);flex-shrink:0;margin-top:2px;
+    }
+    .btn-pat{
+      display:inline-flex;align-items:center;gap:7px;
+      background:var(--teal);color:#fff;text-decoration:none;
+      border-radius:var(--r-sm);padding:.7rem 1.5rem;
+      font-size:14px;font-weight:800;font-family:var(--font-d);
+      transition:background .15s;
+    }
+    .btn-pat:hover{background:var(--teal-d)}
+    @media(max-width:700px){
+      .pat-inner{grid-template-columns:1fr}
+      .pat-mockup-wrap{order:-1}
+    }
+
+    /* ─── NUMBERMILL SECTION ───────────────────────── */
+    #mill{background:var(--mill-bg);padding:5.5rem 2rem}
+    .mill-inner{
+      max-width:1000px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:4rem;align-items:center;
+    }
+    .mill-eyebrow{
+      font-family:var(--font-d);font-size:11px;font-weight:800;
+      text-transform:uppercase;letter-spacing:.1em;
+      color:var(--amber-d);margin-bottom:.7rem;
+    }
+    .mill-title{
+      font-family:var(--font-d);font-size:2.1rem;font-weight:900;
+      color:var(--text);line-height:1.15;margin-bottom:.6rem;letter-spacing:-.02em;
+    }
+    .mill-pitch{font-size:15px;font-weight:600;color:var(--amber-d);margin-bottom:1.25rem;line-height:1.5}
+    .mill-desc{font-size:14px;color:var(--text-soft);line-height:1.8;margin-bottom:1.75rem}
+    .mill-feat-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:2rem}
+    .mill-feat-list li{
+      display:flex;align-items:baseline;gap:.7rem;
+      font-size:14px;color:var(--text-soft);line-height:1.4;
+    }
+    .mill-feat-list li::before{
+      content:'';width:6px;height:6px;border-radius:50%;
+      background:var(--amber-d);flex-shrink:0;margin-top:2px;
+    }
+    .btn-mill{
+      display:inline-flex;align-items:center;gap:7px;
+      background:var(--amber-d);color:#fff;text-decoration:none;
+      border-radius:var(--r-sm);padding:.7rem 1.5rem;
+      font-size:14px;font-weight:800;font-family:var(--font-d);
+      transition:background .15s;
+    }
+    .btn-mill:hover{background:#a86500}
+    @media(max-width:700px){.mill-inner{grid-template-columns:1fr}}
+
+    /* ─── APP MOCKUPS ──────────────────────────────── */
+    .phone-wrap{
+      display:flex;justify-content:center;align-items:center;
+      perspective:1200px;
+    }
+    .phone{
+      width:240px;
+      background:#111;
+      border-radius:32px;
+      padding:10px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 32px 80px rgba(0,0,0,.55),
+        0 8px 24px rgba(0,0,0,.3);
+      transform:rotateY(-8deg) rotateX(4deg);
+      transition:transform .4s ease;
+    }
+    .phone:hover{transform:rotateY(0) rotateX(0) !important}
+    .phone-bar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:6px 10px 8px;
+    }
+    .phone-dots{display:flex;gap:5px}
+    .phone-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+    .phone-screen{border-radius:24px;overflow:hidden;background:#f9fafb}
+
+    /* Number Mill screenshot */
+    .mill-screenshot-wrap{
+      display:flex;justify-content:center;align-items:flex-start;
+      perspective:1200px;
+    }
+    .mill-screenshot-frame{
+      border-radius:10px;overflow:hidden;
+      border:3px solid #3a2010;
+      box-shadow:0 32px 80px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.18);
+      transform:rotateY(7deg) rotateX(3deg);
+      transition:transform .4s ease;
+      width:100%;max-width:440px;
+    }
+    .mill-screenshot-frame:hover{transform:rotateY(0) rotateX(0)}
+    .mill-screenshot{width:100%;height:auto;display:block}
+
+    /* Foreman Reed portrait in description */
+    .mill-intro-row{display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.1rem}
+    .mill-reed-portrait{
+      width:72px;height:96px;
+      object-fit:cover;object-position:center top;
+      border-radius:10px;flex-shrink:0;
+      background:#1c0f06;
+      border:2px solid #3a2010;
+      box-shadow:0 4px 14px rgba(0,0,0,.18);
+    }
+
+    /* PAT mockup screen contents */
+    .pm-head{
+      background:linear-gradient(135deg,#0d6e52,#1a9e75);
+      padding:10px 12px 8px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .pm-head-title{font-family:var(--font-d);font-size:11px;font-weight:900;color:#fff}
+    .pm-xp{background:rgba(255,255,255,.2);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:var(--font-d)}
+    .pm-progress{background:#e8f5f0;padding:7px 12px;display:flex;align-items:center;gap:7px}
+    .pm-bar-track{flex:1;height:5px;background:#c8e8df;border-radius:3px;overflow:hidden}
+    .pm-bar-fill{height:100%;width:45%;background:var(--teal);border-radius:3px}
+    .pm-prog-lbl{font-size:9px;color:#666;font-weight:600;white-space:nowrap}
+    .pm-body{padding:10px 12px}
+    .pm-tag{display:inline-block;background:var(--teal-l);color:var(--teal-d);font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:10px;margin-bottom:7px;font-family:var(--font-d)}
+    .pm-q{font-size:11px;font-weight:700;color:#1a1a1a;line-height:1.4;margin-bottom:10px;font-family:var(--font-d)}
+    .pm-choices{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+    .pm-choice{
+      background:#f0f0f0;border:1.5px solid #ddd;border-radius:7px;
+      padding:6px 8px;font-size:9.5px;font-weight:700;color:#333;
+      display:flex;align-items:center;gap:5px;font-family:var(--font-d);
+    }
+    .pm-choice.sel{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d)}
+    .pm-choice.cor{border-color:#1a9e75;background:#d4f5e9;color:#0d6e52}
+    .pm-cltr{
+      width:16px;height:16px;border-radius:50%;
+      background:rgba(0,0,0,.1);font-size:8px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .pm-choice.sel .pm-cltr{background:var(--teal);color:#fff}
+
+
+    /* ─── ABOUT ────────────────────────────────────── */
+    #about{background:var(--cream2);padding:5.5rem 2rem}
+    .about-inner{max-width:800px;margin:0 auto}
+    .sec-eyebrow{
+      font-family:var(--font-d);font-size:11px;font-weight:800;
+      text-transform:uppercase;letter-spacing:.09em;color:var(--amber-d);margin-bottom:.6rem;
+    }
+    .sec-title{
+      font-family:var(--font-d);font-size:2rem;font-weight:900;
+      color:var(--text);line-height:1.2;margin-bottom:.8rem;letter-spacing:-.01em;
+    }
+    .about-grid{display:grid;grid-template-columns:200px 1fr;gap:2.75rem;align-items:start;margin-top:2.5rem}
+    .about-photo{
+      width:200px;height:200px;border-radius:var(--r);
+      overflow:hidden;border:2px solid var(--border);
+      background:var(--amber-l);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;box-shadow:0 4px 20px rgba(44,36,22,.1);
+    }
+    .about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .about-photo-init{font-family:var(--font-d);font-size:3rem;font-weight:900;color:var(--amber-d)}
+    .about-name{font-family:var(--font-d);font-size:1.4rem;font-weight:900;color:var(--text);margin-bottom:.2rem}
+    .about-role{font-size:13px;font-weight:600;color:var(--amber-d);margin-bottom:1.25rem}
+    .about-bio{font-size:15px;color:var(--text-soft);line-height:1.85;margin-bottom:1.25rem}
+    .about-bio p+p{margin-top:.85rem}
+    .about-philosophy{
+      background:var(--white);border:1.5px solid var(--border);
+      border-radius:var(--r);padding:1.25rem 1.4rem;margin-bottom:1.25rem;
+      border-left:4px solid var(--teal);
+    }
+    .about-philosophy p{font-size:14px;color:var(--text-soft);line-height:1.8;font-style:italic}
+    .creds{display:flex;flex-direction:column;gap:.55rem}
+    .cred{display:flex;align-items:center;gap:.65rem;font-size:14px;font-weight:600;color:var(--text-soft)}
+    .cred-dot{
+      width:20px;height:20px;border-radius:50%;flex-shrink:0;
+      background:var(--teal-l);color:var(--teal);
+      display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;
+    }
+    @media(max-width:620px){
+      .about-grid{grid-template-columns:1fr;text-align:center}
+      .about-photo{margin:0 auto}
+      .creds{align-items:center}
+    }
+
+    /* ─── SUPPORT ──────────────────────────────────── */
+    #support{background:var(--white);padding:5rem 2rem}
+    .support-inner{max-width:820px;margin:0 auto;text-align:center}
+    .support-card{
+      background:linear-gradient(135deg,var(--amber-ll),var(--amber-l));
+      border:1.5px solid #f0deb0;border-radius:var(--r);
+      padding:3.5rem 2.5rem;max-width:560px;margin:2.5rem auto 0;
+    }
+    .support-title{font-family:var(--font-d);font-size:1.5rem;font-weight:900;color:var(--text);margin-bottom:.75rem}
+    .support-desc{font-size:15px;color:var(--text-soft);line-height:1.85;margin-bottom:2rem}
+    .btn-bmc{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      background:linear-gradient(135deg,var(--amber-d),#f0a820);color:#2c1400;
+      text-decoration:none;border-radius:var(--r-sm);padding:.85rem 2.25rem;
+      font-size:15px;font-weight:800;font-family:var(--font-d);
+      border:1.5px solid rgba(196,122,14,.4);transition:all .15s;
+      box-shadow:0 3px 16px rgba(196,122,14,.35);
+    }
+    .btn-bmc:hover{background:linear-gradient(135deg,#b36a0a,#f5b830);transform:translateY(-2px);box-shadow:0 6px 22px rgba(196,122,14,.5)}
+
+    /* ─── FOOTER ───────────────────────────────────── */
+    footer{background:var(--text);padding:3rem 2rem 2.5rem}
+    .footer-inner{
+      max-width:900px;margin:0 auto;
+      display:flex;flex-direction:column;align-items:center;gap:1.25rem;text-align:center;
+    }
+    .footer-logo{font-family:var(--font-d);font-size:1.1rem;font-weight:900;color:#fff}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem}
+    .footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s}
+    .footer-links a:hover{color:#fff}
+    .footer-divider{width:40px;height:1px;background:rgba(255,255,255,.15)}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.3);line-height:1.7}
+
+    /* ─── SUPPORT MODAL ────────────────────────────── */
+    .modal-overlay{
+      position:fixed;inset:0;z-index:500;
+      background:rgba(20,10,0,.75);
+      display:flex;align-items:center;justify-content:center;padding:1.5rem;
+      opacity:0;pointer-events:none;transition:opacity .35s ease;
+    }
+    .modal-overlay.show{opacity:1;pointer-events:auto}
+    body.modal-open{overflow:hidden}
+    .modal-card{
+      background:var(--white);border-radius:var(--r);max-width:460px;width:100%;
+      position:relative;overflow:hidden;
+      transform:translateY(16px) scale(.98);
+      transition:transform .4s cubic-bezier(.16,1,.3,1);
+      box-shadow:0 24px 64px rgba(44,36,22,.35);
+    }
+    .modal-overlay.show .modal-card{transform:translateY(0) scale(1)}
+    .modal-accent{height:4px;background:linear-gradient(90deg,#8c4500,var(--amber))}
+    .modal-body{padding:2rem 2rem 1.5rem}
+    .modal-close{
+      position:absolute;top:12px;right:14px;background:none;border:none;cursor:pointer;
+      font-size:22px;color:var(--muted);line-height:1;padding:2px 6px;transition:color .15s;
+    }
+    .modal-close:hover{color:var(--text)}
+    .modal-heading{
+      font-family:var(--font-d);font-size:1.3rem;font-weight:900;
+      color:var(--text);line-height:1.2;margin-bottom:.75rem;padding-right:2rem;
+    }
+    .modal-text{font-size:14px;color:var(--text-soft);line-height:1.75}
+    .modal-actions{padding:0 2rem 1.75rem;display:flex;flex-direction:column;gap:.75rem}
+    .btn-bmc-lg{
+      display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+      background:linear-gradient(135deg,var(--amber-d),#f0a820);color:#2c1400;
+      text-decoration:none;border-radius:var(--r-sm);padding:.85rem 1.25rem;
+      font-size:14px;font-weight:800;font-family:var(--font-d);
+      border:1.5px solid rgba(196,122,14,.4);transition:all .15s;
+      box-shadow:0 3px 14px rgba(196,122,14,.3);
+    }
+    .btn-bmc-lg:hover{background:linear-gradient(135deg,#b36a0a,#f5b830)}
+    .modal-footer-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .modal-dismiss{
+      background:none;border:none;cursor:pointer;
+      font-size:13px;color:var(--muted);font-family:var(--font-b);
+      transition:color .15s;
+    }
+    .modal-dismiss:hover{color:var(--text-soft)}
+    .modal-learn{
+      font-size:13px;color:var(--teal);font-weight:600;
+      text-decoration:none;transition:color .15s;
+    }
+    .modal-learn:hover{color:var(--teal-d)}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <img src="transparent%20brain.png" alt="" aria-hidden="true"/>
+    </div>
+    <span>Smart Math Minds</span>
+  </a>
+  <div class="nav-links">
+    <a href="#pat">PAT Prep</a>
+    <a href="#mill">Number Mill</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="https://mathminds-pat-app.vercel.app" class="nav-cta" target="_blank" rel="noopener">
+    Try PAT Prep &rarr;
+  </a>
+</nav>
+
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Alberta &middot; Grade 6 &middot; Mathematics</div>
+    <h1 class="hero-h1">Two free tools.<br><em>One goal.</em></h1>
+    <p class="hero-sub">
+      A 500-question PAT preparation app and a numeracy game &mdash;
+      curriculum-aligned, completely ad-free, and built by an
+      Alberta Grade 6 teacher for his own students.
+    </p>
+    <div class="hero-btns">
+      <a href="https://mathminds-pat-app.vercel.app" class="btn-hero-p" target="_blank" rel="noopener">
+        Try Grade 6 PAT Prep &rarr;
+      </a>
+      <a href="https://number-mill.vercel.app" class="btn-hero-s" target="_blank" rel="noopener">
+        Try Number Mill &rarr;
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stats-inner">
+      <div class="hstat"><span class="hstat-n">500+</span><span class="hstat-l">Practice questions</span></div>
+      <div class="hstat"><span class="hstat-n">5</span><span class="hstat-l">Curriculum topics</span></div>
+      <div class="hstat"><span class="hstat-n">2</span><span class="hstat-l">Free tools</span></div>
+      <div class="hstat"><span class="hstat-n">Zero</span><span class="hstat-l">Ads or logins</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PAT PREP SECTION -->
+<section id="pat">
+  <div class="pat-inner">
+    <div>
+      <div class="pat-eyebrow">PAT Preparation &middot; Alberta Grade 6</div>
+      <h2 class="pat-title">Alberta Grade 6<br>PAT Prep</h2>
+      <p class="pat-pitch">A serious way to prepare for PAT-style questions.</p>
+      <p class="pat-desc">
+        Over 500 practice questions covering every topic in the Alberta
+        Grade 6 math curriculum. Short answer, multiple choice, and
+        select-all formats &mdash; the same formats students encounter
+        on the real PAT. Practice by topic, take full simulations,
+        and track exactly where improvement is needed.
+      </p>
+      <ul class="feat-list">
+        <li>500+ questions across Number, Algebra, Geometry, Measurement &amp; Statistics</li>
+        <li>15-question Part A and 50-question Part B simulations</li>
+        <li>Short answer, multiple choice, and select-all formats</li>
+        <li>XP, streaks, and accuracy tracking by topic</li>
+        <li>Hints and worked explanations for every question</li>
+        <li>No login &mdash; works on any device</li>
+      </ul>
+      <a href="https://mathminds-pat-app.vercel.app" class="btn-pat" target="_blank" rel="noopener">
+        Open PAT Prep &rarr;
+      </a>
+    </div>
+    <!-- App mockup -->
+    <div class="phone-wrap pat-mockup-wrap">
+      <div class="phone">
+        <div class="phone-bar">
+          <div class="phone-dots">
+            <div class="phone-dot"></div>
+            <div class="phone-dot"></div>
+            <div class="phone-dot"></div>
+          </div>
+        </div>
+        <div class="phone-screen">
+          <div class="pm-head">
+            <span class="pm-head-title">Master the PAT</span>
+            <span class="pm-xp">⚡ 85 XP</span>
+          </div>
+          <div class="pm-progress">
+            <div class="pm-bar-track"><div class="pm-bar-fill"></div></div>
+            <span class="pm-prog-lbl">Q 5 of 10</span>
+          </div>
+          <div class="pm-body">
+            <span class="pm-tag">Number</span>
+            <div class="pm-q">What is 3/4 + 5/6?<br>Write as a mixed number.</div>
+            <div class="pm-choices">
+              <div class="pm-choice"><span class="pm-cltr">A</span>1 7/12</div>
+              <div class="pm-choice sel"><span class="pm-cltr">B</span>1 1/2</div>
+              <div class="pm-choice"><span class="pm-cltr">C</span>8/10</div>
+              <div class="pm-choice"><span class="pm-cltr">D</span>1 5/8</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- NUMBER MILL SECTION -->
+<section id="mill">
+  <div class="mill-inner">
+    <!-- Game screenshot -->
+    <div class="mill-screenshot-wrap">
+      <div class="mill-screenshot-frame">
+        <img src="numbermill.png" alt="Number Mill gameplay — Foreman Reed on the factory conveyor belt" class="mill-screenshot"/>
+      </div>
+    </div>
+    <div>
+      <div class="mill-eyebrow">Arcade Game &middot; Multiples &amp; Number Sense</div>
+      <h2 class="mill-title">Number Mill</h2>
+      <div class="mill-intro-row">
+        <img src="foreman%20reed.png" alt="Foreman Reed" class="mill-reed-portrait"/>
+        <p class="mill-pitch">The factory never stops.<br>Can you keep up?</p>
+      </div>
+      <p class="mill-desc">
+        A classic arcade-style game of sorting multiples in a factory-themed world.
+        Numbers roll down the conveyor belt and you must sort them fast &mdash;
+        keep the multiples, discard the rest. Foreman Reed won&rsquo;t accept any
+        slacking as the difficulty ramps up each round. It&rsquo;s the kind of
+        practice that doesn&rsquo;t feel like practice.
+      </p>
+      <ul class="mill-feat-list">
+        <li>Sort multiples on a fast-moving conveyor belt</li>
+        <li>Difficulty ramps up each round &mdash; keeps students on their toes</li>
+        <li>Daily challenge mode &mdash; same board for everyone, worldwide</li>
+        <li>Builds fluency with factors, multiples, and number sense</li>
+        <li>No login, no download &mdash; play anywhere, any device</li>
+      </ul>
+      <a href="https://number-mill.vercel.app" class="btn-mill" target="_blank" rel="noopener">
+        Play Number Mill &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="sec-eyebrow">The teacher behind the tools</div>
+    <h2 class="sec-title">Hi, I&rsquo;m Eric.</h2>
+    <div class="about-grid">
+      <div class="about-photo">
+        <img
+          src="photo.jpg"
+          alt="Eric Garner, Grade 6 math teacher in Alberta"
+          onerror="this.style.display='none';document.getElementById('about-init').style.display='block'"
+        />
+        <span class="about-photo-init" id="about-init" style="display:none">EG</span>
+      </div>
+      <div>
+        <div class="about-name">Eric Garner</div>
+        <div class="about-role">Grade 6 Math Teacher &middot; Alberta, Canada</div>
+        <div class="about-bio">
+          <p>I built Smart Math Minds because the tools I wanted for my own students simply didn&rsquo;t exist. Free, focused, curriculum-aligned practice for Alberta kids &mdash; no ads, no logins, no paywalls. Just good resources that work.</p>
+          <p>Every tool here started in my own classroom. If it helps my students, I share it. That&rsquo;s the whole idea.</p>
+          <p>Smart Math Minds is my corner of the internet for that &mdash; a growing collection of games and practice tools built by a teacher, for students. The belief behind all of it is simple: when educators share what works, kids win.</p>
+        </div>
+        <div class="about-philosophy" id="philosophy">
+          <p>Your support keeps the lights on. Hosting, development, and the time it takes to build things properly aren&rsquo;t free &mdash; but the tools always will be. A coffee or two goes a long way toward making sure that stays true.</p>
+          <p style="margin-top:.75rem">Thank you for being here. Whether you donate or just use the tools, you&rsquo;re part of something that matters to real kids in real classrooms.</p>
+          <p style="margin-top:.75rem;font-style:normal;font-weight:700;color:var(--text)">&mdash; Eric</p>
+        </div>
+        <div class="creds">
+          <div class="cred"><div class="cred-dot">&#10003;</div>Alberta Certified Teacher</div>
+          <div class="cred"><div class="cred-dot">&#10003;</div>Grade 6 Mathematics</div>
+          <div class="cred"><div class="cred-dot">&#10003;</div>Tools tested in a real classroom with real students</div>
+          <div class="cred"><div class="cred-dot">&#10003;</div>Aligned to the Alberta Program of Studies</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SUPPORT -->
+<section id="support">
+  <div class="support-inner">
+    <div class="sec-eyebrow">Keep the lights on</div>
+    <h2 class="sec-title">These tools are free.<br>Always will be.</h2>
+    <div class="support-card">
+      <div class="support-title">Buy me a coffee?</div>
+      <p class="support-desc">
+        I build and maintain Smart Math Minds in my spare time &mdash; after
+        school, on weekends, and through the summers. No ads, no paywalls,
+        no subscriptions. If these tools have helped your students or your
+        child, a coffee goes a long way toward keeping everything running and
+        building what comes next.
+      </p>
+      <a href="https://buymeacoffee.com/smartmathminds" class="btn-bmc" target="_blank" rel="noopener">
+        Buy me a coffee
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Smart Math Minds</div>
+    <div class="footer-links">
+      <a href="https://mathminds-pat-app.vercel.app" target="_blank" rel="noopener">PAT Prep App</a>
+      <a href="https://number-mill.vercel.app" target="_blank" rel="noopener">Number Mill</a>
+      <a href="#about">About Eric</a>
+      <a href="https://buymeacoffee.com/smartmathminds" target="_blank" rel="noopener">Support</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-copy">
+      Made with care in Alberta by Eric Garner &nbsp;&middot;&nbsp; &copy; 2025 Smart Math Minds<br>
+      Practice questions are not official PAT questions. Designed to reflect the Alberta Program of Studies for Grade 6 Mathematics.
+    </div>
+  </div>
+</footer>
+
+
+<!-- SUPPORT MODAL -->
+<div class="modal-overlay" id="support-modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-accent"></div>
+    <button class="modal-close" onclick="dismissModal()" aria-label="Close">&times;</button>
+    <div class="modal-body">
+      <h2 class="modal-heading">These tools will always be free &mdash; and ad-free.</h2>
+      <p class="modal-text">
+        Hosting and development aren&rsquo;t free though. If Smart Math Minds
+        has helped your students, consider buying me a coffee to keep it going.
+      </p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://buymeacoffee.com/smartmathminds" class="btn-bmc-lg" target="_blank" rel="noopener" onclick="dismissModal()">
+        Buy me a coffee
+      </a>
+      <div class="modal-footer-row">
+        <button class="modal-dismiss" onclick="dismissModal()">No thanks</button>
+        <a href="#philosophy" class="modal-learn" onclick="dismissModal()">Learn more about why &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    if (sessionStorage.getItem('modal_seen')) return;
+    setTimeout(function () {
+      var el = document.getElementById('support-modal');
+      if (el) { el.classList.add('show'); document.body.classList.add('modal-open'); }
+    }, 4000);
+  })();
+
+  function dismissModal() {
+    document.getElementById('support-modal').classList.remove('show');
+    document.body.classList.remove('modal-open');
+    sessionStorage.setItem('modal_seen', '1');
+  }
+</script>
+
+</body>
+</html>
